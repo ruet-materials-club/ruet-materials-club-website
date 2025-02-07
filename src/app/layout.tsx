@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RUET materials club",
-  description: "RUET materials club",
+  title: "RUET Materials Club",
+  description: "RUET Materials Club",
 };
 
 export default function RootLayout({
