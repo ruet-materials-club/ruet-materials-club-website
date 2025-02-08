@@ -1,1 +1,51 @@
 @import "tailwindcss";
+
+body {
+  background:
+    radial-gradient(
+        circle farthest-side at 0% 50%,
+        #fbfdfc 23.5%,
+        rgba(240, 166, 17, 0) 0
+      )
+      21px 30px,
+    radial-gradient(
+        circle farthest-side at 0% 50%,
+        #e4e5e4 24%,
+        rgba(240, 166, 17, 0) 0
+      )
+      19px 30px,
+    linear-gradient(
+        #fbfdfc 14%,
+        rgba(240, 166, 17, 0) 0,
+        rgba(240, 166, 17, 0) 85%,
+        #fbfdfc 0
+      )
+      0 0,
+    linear-gradient(
+        150deg,
+        #fbfdfc 24%,
+        #e4e5e4 0,
+        #e4e5e4 26%,
+        rgba(240, 166, 17, 0) 0,
+        rgba(240, 166, 17, 0) 74%,
+        #e4e5e4 0,
+        #e4e5e4 76%,
+        #fbfdfc 0
+      )
+      0 0,
+    linear-gradient(
+        30deg,
+        #fbfdfc 24%,
+        #e4e5e4 0,
+        #e4e5e4 26%,
+        rgba(240, 166, 17, 0) 0,
+        rgba(240, 166, 17, 0) 74%,
+        #e4e5e4 0,
+        #e4e5e4 76%,
+        #fbfdfc 0
+      )
+      0 0,
+    linear-gradient(90deg, #e4e5e4 2%, #fbfdfc 0, #fbfdfc 98%, #e4e5e4 0%) 0 0
+      #fbfdfc;
+  background-size: 40px 60px;
+}
