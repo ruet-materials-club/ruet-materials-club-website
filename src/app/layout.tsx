@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
 import "./globals.css";
@@ -22,8 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={jost.className}>
-        <Header />
+      <body className={cn(jost.className, "flex min-h-svh flex-col")}>
+        <Header
+          navigationLinks={[
+            { path: "/", name: "Home" },
+            { path: "/team", name: "Team" },
+          ]}
+        />
         {children}
         <Footer />
       </body>
