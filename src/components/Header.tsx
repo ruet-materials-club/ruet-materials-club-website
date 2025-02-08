@@ -1,14 +1,69 @@
+"use client";
+
+import IconMinified from "@/app/images/logo-3d.webp";
+import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 const Icon = dynamic(() => import("./Icon"));
 
-export default function Header() {
+export default function Header({
+  navigationLinks,
+}: {
+  navigationLinks: { path: string; name: string }[];
+}) {
+  const pathname = usePathname();
+  const isFullPage = pathname === "/";
+
   return (
-    <>
-      <header className="flex min-h-svh flex-col items-center justify-center gap-4 p-4 text-center">
-        <Icon />
-        <h1 className="text-4xl font-bold md:text-6xl">RUET Materials Club</h1>
-        <div className="text-2xl md:text-3xl">Learning. Linking. Leading.</div>
-      </header>
-    </>
+    <header>
+      <div
+        className={cn(
+          "flex items-center gap-4 py-4",
+          isFullPage
+            ? "relative min-h-svh flex-col justify-center text-center"
+            : "container m-auto px-4",
+        )}
+      >
+        {isFullPage ? (
+          <div className="px-16">
+            <Icon />
+          </div>
+        ) : (
+          <Image src={IconMinified} alt="Icon" className="h-12 w-auto" />
+        )}
+        <h1
+          className={isFullPage ? "text-4xl font-bold md:text-6xl" : "text-xl"}
+        >
+          RUET Materials Club
+        </h1>
+        <div className={isFullPage ? "text-2xl md:text-3xl" : "hidden"}>
+          Learning. Linking. Leading.
+        </div>
+        <nav
+          className={cn(
+            "flex gap-4",
+            isFullPage ? "absolute bottom-4" : "ms-auto",
+          )}
+        >
+          {navigationLinks.map((x) => (
+            <Link
+              key={x.path}
+              href={x.path}
+              className={cn(
+                "rounded-2xl border border-solid bg-blue-500/5 px-4 py-2 text-lg shadow backdrop-blur-[1px]",
+                pathname === x.path
+                  ? "border-b-2 border-b-blue-500/50"
+                  : "border-blue-500/10 bg-blue-500/5 hover:bg-blue-500/15",
+              )}
+            >
+              {x.name}
+            </Link>
+          ))}
+        </nav>
+      </div>
+    </header>
   );
 }

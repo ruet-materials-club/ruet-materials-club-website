@@ -117,47 +117,43 @@ export default function Icon() {
 
   const fallback = <Image src={IconFallback} alt="Icon" />;
 
-  return (
-    <div className="px-16">
-      {isSupported ? (
-        <Canvas
-          shadows
-          ref={canvasRef}
-          style={{
-            maxWidth: "480px",
-            width: "100%",
-            aspectRatio: 1,
-          }}
-          orthographic
-          camera={{ position: [0, 0, 2], zoom: 100 }}
-        >
-          <ambientLight intensity={Math.PI / 2} />
-          <spotLight
-            position={[10, 10, 10]}
-            angle={0.15}
-            penumbra={1}
-            decay={0}
-            intensity={Math.PI}
-          />
-          <directionalLight
-            position={pointLightPosition}
-            // decay={0}
-            intensity={Math.PI}
-            castShadow
-            shadow-mapSize={[1024, 1024]}
-          />
-          <ResponsiveGroup />
-          <mesh
-            position={[0, 0, 0]}
-            receiveShadow
-            material={new THREE.ShadowMaterial({ opacity: 0.25 })}
-          >
-            <planeGeometry args={[5, 5]} />
-          </mesh>
-        </Canvas>
-      ) : (
-        fallback
-      )}
-    </div>
+  return isSupported ? (
+    <Canvas
+      shadows
+      ref={canvasRef}
+      style={{
+        maxWidth: "480px",
+        width: "100%",
+        aspectRatio: 1,
+      }}
+      orthographic
+      camera={{ position: [0, 0, 2], zoom: 100 }}
+    >
+      <ambientLight intensity={Math.PI / 2} />
+      <spotLight
+        position={[10, 10, 10]}
+        angle={0.15}
+        penumbra={1}
+        decay={0}
+        intensity={Math.PI}
+      />
+      <directionalLight
+        position={pointLightPosition}
+        // decay={0}
+        intensity={Math.PI}
+        castShadow
+        shadow-mapSize={[1024, 1024]}
+      />
+      <ResponsiveGroup />
+      <mesh
+        position={[0, 0, 0]}
+        receiveShadow
+        material={new THREE.ShadowMaterial({ opacity: 0.25 })}
+      >
+        <planeGeometry args={[5, 5]} />
+      </mesh>
+    </Canvas>
+  ) : (
+    fallback
   );
 }
