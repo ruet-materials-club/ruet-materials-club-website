@@ -1,51 +1,24 @@
 @import "tailwindcss";
 
-body {
+html {
+  --s: 0.65rem; /* control the size*/
+  --c1: #fbfdfc;
+  --c2: #e4e5e4;
+
+  --c: #0000, var(--c1) 0.5deg 119.5deg, #0000 120deg;
+  --g1: conic-gradient(from 60deg at 53.25% calc(415% / 6), var(--c));
+  --g2: conic-gradient(from 180deg at 46.75% calc(415% / 6), var(--c));
+  --g3: conic-gradient(from -60deg at 50% calc(190% / 12), var(--c));
   background:
-    radial-gradient(
-        circle farthest-side at 0% 50%,
-        #fbfdfc 23.5%,
-        rgba(240, 166, 17, 0) 0
-      )
-      21px 30px,
-    radial-gradient(
-        circle farthest-side at 0% 50%,
-        #e4e5e4 24%,
-        rgba(240, 166, 17, 0) 0
-      )
-      19px 30px,
-    linear-gradient(
-        #fbfdfc 14%,
-        rgba(240, 166, 17, 0) 0,
-        rgba(240, 166, 17, 0) 85%,
-        #fbfdfc 0
-      )
-      0 0,
-    linear-gradient(
-        150deg,
-        #fbfdfc 24%,
-        #e4e5e4 0,
-        #e4e5e4 26%,
-        rgba(240, 166, 17, 0) 0,
-        rgba(240, 166, 17, 0) 74%,
-        #e4e5e4 0,
-        #e4e5e4 76%,
-        #fbfdfc 0
-      )
-      0 0,
-    linear-gradient(
-        30deg,
-        #fbfdfc 24%,
-        #e4e5e4 0,
-        #e4e5e4 26%,
-        rgba(240, 166, 17, 0) 0,
-        rgba(240, 166, 17, 0) 74%,
-        #e4e5e4 0,
-        #e4e5e4 76%,
-        #fbfdfc 0
-      )
-      0 0,
-    linear-gradient(90deg, #e4e5e4 2%, #fbfdfc 0, #fbfdfc 98%, #e4e5e4 0%) 0 0
-      #fbfdfc;
-  background-size: 40px 60px;
+    var(--g1),
+    var(--g1) var(--s) calc(1.73 * var(--s)),
+    var(--g2),
+    var(--g2) var(--s) calc(1.73 * var(--s)),
+    var(--g3) var(--s) 0,
+    var(--g3) 0 calc(1.73 * var(--s)) var(--c2);
+  background-size: calc(2 * var(--s)) calc(3.46 * var(--s));
+}
+
+body {
+  color: #373c3d;
 }
