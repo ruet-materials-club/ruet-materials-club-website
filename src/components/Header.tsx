@@ -30,7 +30,7 @@ export default function Header({
     <header>
       <div
         className={cn(
-          "relative flex items-center gap-4 py-4",
+          "relative flex items-center gap-4 py-4 [@media(max-height:40rem)]:gap-0",
           isFullPage
             ? "min-h-svh flex-col justify-center text-center"
             : "container m-auto px-4",
@@ -42,11 +42,21 @@ export default function Header({
           <Image src={IconMinified} alt="Icon" className="h-12 w-auto" />
         )}
         <h1
-          className={isFullPage ? "text-3xl font-bold md:text-6xl" : "text-xl"}
+          className={
+            isFullPage
+              ? "text-3xl font-bold md:text-6xl [@media(max-height:40rem)]:text-xl"
+              : "text-xl"
+          }
         >
           RUET Materials Club
         </h1>
-        <div className={isFullPage ? "text-xl md:text-3xl" : "hidden"}>
+        <div
+          className={
+            isFullPage
+              ? "text-xl md:text-3xl [@media(max-height:40rem)]:text-lg"
+              : "hidden"
+          }
+        >
           Learning. Linking. Leading.
         </div>
         {!isFullPage && (
