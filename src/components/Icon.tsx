@@ -1,10 +1,10 @@
 "use client";
 
-import IconFallback from "@/app/images/logo-3d.webp";
+import IconFallback from "@/images/logo-3d.webp";
 import { useThrottle } from "@react-hook/throttle";
 import { Canvas, ThreeElements, useThree, Vector3 } from "@react-three/fiber";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 function Node(props: ThreeElements["mesh"]) {
@@ -106,8 +106,11 @@ export default function Icon() {
       const { width, height, x, y } = canvasRef.current.getBoundingClientRect();
       const dx = event.clientX - x - width / 2;
       const dy = -(event.clientY - y - height / 2);
-      const dr = Math.sqrt(dx ** 2 + dy ** 2);
-      setPointLightPosition([dx / dr, dy / dr, 1.5]);
+      setPointLightPosition([
+        Math.max(Math.min((2 * dx) / width, 1), -1),
+        Math.max(Math.min((2 * dy) / height, 1), -1),
+        1.5,
+      ]);
     }
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
@@ -115,44 +118,43 @@ export default function Icon() {
     };
   }, [setPointLightPosition]);
 
-  const fallback = <Image src={IconFallback} alt="Icon" />;
+  const fallback = <Image src={IconFallback} alt="Icon" className="px-16" />;
 
   return isSupported ? (
-    <Canvas
-      shadows
-      ref={canvasRef}
-      style={{
-        maxWidth: "480px",
-        width: "100%",
-        aspectRatio: 1,
-      }}
-      orthographic
-      camera={{ position: [0, 0, 2], zoom: 100 }}
-    >
-      <ambientLight intensity={Math.PI / 2} />
-      <spotLight
-        position={[10, 10, 10]}
-        angle={0.15}
-        penumbra={1}
-        decay={0}
-        intensity={Math.PI}
-      />
-      <directionalLight
-        position={pointLightPosition}
-        // decay={0}
-        intensity={Math.PI}
-        castShadow
-        shadow-mapSize={[1024, 1024]}
-      />
-      <ResponsiveGroup />
-      <mesh
-        position={[0, 0, 0]}
-        receiveShadow
-        material={new THREE.ShadowMaterial({ opacity: 0.25 })}
+    <Suspense fallback={fallback}>
+      <Canvas
+        shadows
+        ref={canvasRef}
+        className="box-content aspect-square w-full px-16"
+        style={{ maxWidth: "min(480px, calc(100% - 8rem))" }}
+        orthographic
+        camera={{ position: [0, 0, 2], zoom: 100 }}
       >
-        <planeGeometry args={[5, 5]} />
-      </mesh>
-    </Canvas>
+        <ambientLight intensity={Math.PI / 2} />
+        <spotLight
+          position={[10, 10, 10]}
+          angle={0.15}
+          penumbra={1}
+          decay={0}
+          intensity={Math.PI}
+        />
+        <directionalLight
+          position={pointLightPosition}
+          // decay={0}
+          intensity={Math.PI}
+          castShadow
+          shadow-mapSize={[1024, 1024]}
+        />
+        <ResponsiveGroup />
+        <mesh
+          position={[0, 0, 0]}
+          receiveShadow
+          material={new THREE.ShadowMaterial({ opacity: 0.25 })}
+        >
+          <planeGeometry args={[5, 5]} />
+        </mesh>
+      </Canvas>
+    </Suspense>
   ) : (
     fallback
   );
