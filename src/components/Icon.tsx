@@ -1,6 +1,7 @@
 "use client";
 
 import IconFallback from "@/images/logo-3d.webp";
+import { cn } from "@/lib/utils";
 import { useThrottle } from "@react-hook/throttle";
 import { Canvas, ThreeElements, useThree, Vector3 } from "@react-three/fiber";
 import Image from "next/image";
@@ -71,6 +72,7 @@ function ResponsiveGroup() {
   return (
     <group
       position={[0, 0, 0.15]}
+      rotateX={45}
       scale={(1.05 * viewport.width) / 4.8}
       castShadow
     >
@@ -118,15 +120,19 @@ export default function Icon() {
     };
   }, [setPointLightPosition]);
 
-  const fallback = <Image src={IconFallback} alt="Icon" className="px-16" />;
+  const style = { maxWidth: "min(480px, calc(100% - 8rem))" };
+  const className = cn("box-content aspect-square w-full px-16");
+  const fallback = (
+    <Image src={IconFallback} alt="Icon" className={className} style={style} />
+  );
 
   return isSupported ? (
     <Suspense fallback={fallback}>
       <Canvas
         shadows
         ref={canvasRef}
-        className="box-content aspect-square w-full px-16"
-        style={{ maxWidth: "min(480px, calc(100% - 8rem))" }}
+        className={className}
+        style={style}
         orthographic
         camera={{ position: [0, 0, 2], zoom: 100 }}
       >
