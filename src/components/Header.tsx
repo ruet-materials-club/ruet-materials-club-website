@@ -3,6 +3,7 @@
 import IconMinified from "@/images/logo-3d.webp";
 import { cn } from "@/lib/utils";
 import { Divide as Hamburger } from "hamburger-react";
+import { motion } from "motion/react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +13,7 @@ import { useEffect, useState } from "react";
 const Icon = dynamic(() => import("./Icon"), {
   loading: () => <Image src={IconMinified} alt="Icon" className="px-16" />,
 });
+const MotionImage = motion(Image);
 
 export default function Header({
   navigationLinks,
@@ -19,8 +21,8 @@ export default function Header({
   navigationLinks: { path: string; name: string }[];
 }) {
   const pathname = usePathname();
-  const isFullPage = pathname === "/";
   const [isOpen, setOpen] = useState(false);
+  const isFullPage = pathname === "/";
 
   useEffect(() => {
     setOpen(false);
@@ -36,12 +38,29 @@ export default function Header({
             : "container m-auto px-4",
         )}
       >
-        {isFullPage ? (
-          <Icon />
-        ) : (
-          <Image src={IconMinified} alt="Icon" className="h-12 w-auto" />
-        )}
-        <h1
+        <div className={cn("relative", isFullPage ? "w-full" : "w-auto")}>
+          {isFullPage ? (
+            <>
+              <Icon />
+              <motion.div
+                layout
+                layoutId="icon"
+                className="absolute top-0 left-1/2 m-auto aspect-square -translate-x-1/2"
+                style={{ width: "min(480px, calc(100% - 8rem), 40vh)" }}
+              ></motion.div>
+            </>
+          ) : (
+            <MotionImage
+              layout
+              layoutId="icon"
+              src={IconMinified}
+              alt="Icon"
+              className="h-12 w-auto"
+            />
+          )}
+        </div>
+        <motion.h1
+          layout
           className={
             isFullPage
               ? "text-3xl font-bold md:text-6xl [@media(max-height:40rem)]:text-xl"
@@ -49,22 +68,27 @@ export default function Header({
           }
         >
           RUET Materials Club
-        </h1>
-        <div
-          className={
-            isFullPage
-              ? "text-xl md:text-3xl [@media(max-height:40rem)]:text-lg"
-              : "hidden"
-          }
-        >
-          Learning. Linking. Leading.
-        </div>
+        </motion.h1>
+        {isFullPage && (
+          <motion.div
+            key="motto"
+            className={
+              isFullPage
+                ? "text-xl md:text-3xl [@media(max-height:40rem)]:text-lg"
+                : "hidden"
+            }
+          >
+            Learning. Linking. Leading.
+          </motion.div>
+        )}
+
         {!isFullPage && (
           <div className="ms-auto md:hidden">
             <Hamburger toggled={isOpen} toggle={setOpen} size={24} rounded />
           </div>
         )}
-        <nav
+        <motion.nav
+          layout
           className={cn(
             "flex gap-4 rounded-3xl",
             isFullPage ? "absolute bottom-4" : "ms-auto",
@@ -91,7 +115,7 @@ export default function Header({
               {x.name}
             </Link>
           ))}
-        </nav>
+        </motion.nav>
       </div>
     </header>
   );

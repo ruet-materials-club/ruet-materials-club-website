@@ -20,6 +20,7 @@
     "clsx": "^2.1.1",
     "hamburger-react": "^2.5.2",
     "lucide-react": "^0.475.0",
+    "motion": "^12.4.1",
     "next": "15.1.6",
     "prettier-plugin-organize-imports": "^4.1.0",
     "react": "^19.0.0",
