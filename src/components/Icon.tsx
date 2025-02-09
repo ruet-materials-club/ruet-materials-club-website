@@ -120,7 +120,7 @@ export default function Icon() {
   }, [setPointLightPosition]);
 
   const style = { maxWidth: "min(480px, calc(100% - 8rem), 40vh)" };
-  const className = cn("box-content aspect-square w-full px-16");
+  const className = cn("mx-auto box-content aspect-square w-full px-16");
   const fallback = (
     <Image src={IconFallback} alt="Icon" className={className} style={style} />
   );
