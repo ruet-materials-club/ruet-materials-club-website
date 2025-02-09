@@ -1,13 +1,15 @@
 "use client";
 
-import IconMinified from "@/app/images/logo-3d.webp";
+import IconMinified from "@/images/logo-3d.webp";
 import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Icon = dynamic(() => import("./Icon"));
+const Icon = dynamic(() => import("./Icon"), {
+  loading: () => <Image src={IconMinified} alt="Icon" className="px-16" />,
+});
 
 export default function Header({
   navigationLinks,
@@ -28,18 +30,16 @@ export default function Header({
         )}
       >
         {isFullPage ? (
-          <div className="px-16">
-            <Icon />
-          </div>
+          <Icon />
         ) : (
           <Image src={IconMinified} alt="Icon" className="h-12 w-auto" />
         )}
         <h1
-          className={isFullPage ? "text-4xl font-bold md:text-6xl" : "text-xl"}
+          className={isFullPage ? "text-3xl font-bold md:text-6xl" : "text-xl"}
         >
           RUET Materials Club
         </h1>
-        <div className={isFullPage ? "text-2xl md:text-3xl" : "hidden"}>
+        <div className={isFullPage ? "text-xl md:text-3xl" : "hidden"}>
           Learning. Linking. Leading.
         </div>
         <nav
