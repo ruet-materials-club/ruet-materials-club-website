@@ -13,7 +13,7 @@ function Node(props: ThreeElements["mesh"]) {
 
   return (
     <mesh castShadow {...props} ref={meshRef}>
-      <sphereGeometry args={[0.15, 4, 32]} />
+      <sphereGeometry args={[0.15, 16, 32]} />
       <meshStandardMaterial color="#71797E" metalness={0.6} roughness={0.6} />
     </mesh>
   );
@@ -72,7 +72,6 @@ function ResponsiveGroup() {
   return (
     <group
       position={[0, 0, 0.15]}
-      rotateX={45}
       scale={(1.05 * viewport.width) / 4.8}
       castShadow
     >
