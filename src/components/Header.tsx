@@ -31,10 +31,14 @@ export default function Header({
     if (pathname !== "/") return setIsFullPage(false);
     const observer1 = new IntersectionObserver(
       ([e]) => {
-        if (e.intersectionRatio < 0.99 && padRef.current) {
-          padRef.current.style.height = `${window.innerHeight}px`;
-          window.scroll(0, window.innerHeight);
-          setIsFullPage(false);
+        if (e.intersectionRatio < 0.99) {
+          setIsFullPage((isFullPage) => {
+            if (isFullPage === false) return false;
+            if (padRef.current)
+              padRef.current.style.height = `${window.innerHeight}px`;
+            window.scroll(0, window.innerHeight);
+            return false;
+          });
         }
       },
       { threshold: [0.5, 0.75, 1] },
