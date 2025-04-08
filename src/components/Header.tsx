@@ -160,6 +160,9 @@ export default function Header({
                       ? "border-b-2 border-b-blue-500/50 bg-blue-500/15"
                       : "border-blue-500/10 bg-blue-500/5 hover:bg-blue-500/15",
                   )}
+                  onClick={() => {
+                    if (padRef.current) padRef.current.style.display = "none";
+                  }}
                 >
                   {x.name}
                 </Link>
