@@ -10,6 +10,9 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@payloadcms/db-vercel-postgres": "^3.35.1",
+    "@payloadcms/next": "^3.35.1",
+    "@payloadcms/richtext-lexical": "^3.35.1",
     "@react-hook/throttle": "^2.2.0",
     "@react-three/drei": "^10.0.0-rc.1",
     "@react-three/fiber": "^9.0.0-rc.6",
@@ -18,14 +21,17 @@
     "change-case": "^5.4.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "graphql": "^16.10.0",
     "hamburger-react": "^2.5.2",
     "lucide-react": "^0.475.0",
     "motion": "^12.4.1",
     "next": "15.1.6",
+    "payload": "^3.35.1",
     "prettier-plugin-organize-imports": "^4.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
+    "sharp": "^0.34.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.173.0"
