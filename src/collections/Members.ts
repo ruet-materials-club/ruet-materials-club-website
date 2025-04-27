@@ -18,12 +18,24 @@ export const Members: CollectionConfig = {
       required: true,
     },
     {
+      name: "email",
+      type: "email",
+      required: true,
+      defaultValue: "",
+    },
+    {
       name: "position",
       type: "text",
       required: true,
     },
     {
-      name: "displayOrder",
+      name: "orderWithInGroup",
+      type: "number",
+      required: true,
+      defaultValue: 0,
+    },
+    {
+      name: "groupOrder",
       type: "number",
       required: true,
       defaultValue: 0,
