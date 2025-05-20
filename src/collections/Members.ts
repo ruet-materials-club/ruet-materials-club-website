@@ -47,4 +47,20 @@ export const Members: CollectionConfig = {
       defaultValue: 0,
     },
   ],
+  hooks: {
+    afterChange: [revalidate],
+    afterDelete: [revalidate],
+  },
 };
+
+async function revalidate() {
+  const path = `/team`;
+  try {
+    await fetch(`${process.env.BASE_URL}/revalidate?path=${path}`);
+  } catch (err) {
+    console.error(
+      "Revalidate failed:",
+      err instanceof Error ? err.message : err,
+    );
+  }
+}
