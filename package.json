@@ -28,6 +28,7 @@
     "change-case": "^5.4.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "graphql": "^16.10.0",
     "hamburger-react": "^2.5.2",
     "lucide-react": "^0.475.0",

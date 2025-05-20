@@ -28,6 +28,7 @@ export default function RootLayout({
           navigationLinks={[
             { path: "/", name: "Home" },
             { path: "/team", name: "Team" },
+            { path: "/posts", name: "Blog" },
           ]}
         />
         {children}
