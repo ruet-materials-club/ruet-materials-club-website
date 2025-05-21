@@ -3,3 +3,4 @@ build
 coverage
 .next
 .vscode
+payload-types.ts
