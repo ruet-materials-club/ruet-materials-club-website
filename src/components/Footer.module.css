@@ -1,6 +1,6 @@
 .footer {
-  background-color: #fbfdfc;
-  filter: drop-shadow(0 0 1rem #e4e5e4);
+  background-color: var(--c1);
+  filter: drop-shadow(0 0 1rem var(--c2));
 }
 
 .footer::before {
@@ -15,5 +15,5 @@
   height: calc(0.8 * var(--s));
   width: 100%;
   z-index: -1;
-  filter: drop-shadow(0 -2px 0 #e4e5e4);
+  filter: drop-shadow(0 -2px 0 var(--c2));
 }
