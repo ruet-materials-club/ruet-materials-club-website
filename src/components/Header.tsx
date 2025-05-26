@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from "react";
 const Icon = dynamic(() => import("./Icon"), {
   loading: () => <Image src={IconMinified} alt="Icon" className="px-16" />,
 });
-const MotionImage = motion(Image);
+const MotionImage = motion.create(Image);
 
 export default function Header({
   navigationLinks,
@@ -21,24 +21,24 @@ export default function Header({
   navigationLinks: { path: string; name: string }[];
 }) {
   const pathname = usePathname();
-  const [isOpen, setOpen] = useState(false);
+  const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
   const padRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
-  const [isFullPage, setIsFullPage] = useState(pathname === "/");
+  const [isBannerExpanded, setIsBannerExpanded] = useState(pathname === "/");
+  const isBannerCollapsing = useRef(false);
+
+  function collapseBanner() {
+    isBannerCollapsing.current = true;
+    return false;
+  }
 
   useEffect(() => {
-    setOpen(false);
-    if (pathname !== "/") return setIsFullPage(false);
+    setIsNavMenuOpen(false);
+    if (pathname !== "/") return setIsBannerExpanded(false);
     const observer1 = new IntersectionObserver(
       ([e]) => {
-        if (e.intersectionRatio < 0.99) {
-          setIsFullPage((isFullPage) => {
-            if (isFullPage === false) return false;
-            if (padRef.current)
-              padRef.current.style.height = `${window.innerHeight}px`;
-            window.scroll(0, window.innerHeight);
-            return false;
-          });
+        if (e.intersectionRatio < 0.99 && !isBannerCollapsing.current) {
+          setIsBannerExpanded(collapseBanner);
         }
       },
       { threshold: [0.5, 0.75, 1] },
@@ -46,10 +46,10 @@ export default function Header({
     if (headerRef.current) observer1.observe(headerRef.current);
     const observer2 = new IntersectionObserver(
       ([e]) => {
-        if (e.intersectionRatio > 0 && padRef.current) {
-          padRef.current.style.height = "0px";
+        if (e.intersectionRatio > 0 && !isBannerCollapsing.current) {
+          padRef.current?.style.removeProperty("height");
           window.scroll(0, 0);
-          setIsFullPage(true);
+          setIsBannerExpanded(true);
         }
       },
       { threshold: 0.1 },
@@ -59,7 +59,7 @@ export default function Header({
 
   const linkClassName = cn(
     "rounded-2xl border-solid px-4 py-2 text-lg",
-    isFullPage
+    isBannerExpanded
       ? "border shadow backdrop-blur-[1px]"
       : "md:border md:shadow md:backdrop-blur-[1px]",
   );
@@ -67,17 +67,24 @@ export default function Header({
   return (
     <>
       {pathname === "/" && <div ref={padRef}></div>}
-      <header ref={headerRef}>
+      <header
+        ref={headerRef}
+        className={cn(
+          isBannerExpanded || "sticky top-0 z-10 bg-[var(--c1)] shadow-lg",
+        )}
+      >
         <div
           className={cn(
             "relative flex items-center gap-4 py-4 [@media(max-height:40rem)]:gap-0",
-            isFullPage
+            isBannerExpanded
               ? "min-h-svh flex-col justify-center text-center"
               : "container m-auto px-4",
           )}
         >
-          <div className={cn("relative", isFullPage ? "w-full" : "w-auto")}>
-            {isFullPage ? (
+          <div
+            className={cn("relative", isBannerExpanded ? "w-full" : "w-auto")}
+          >
+            {isBannerExpanded ? (
               <>
                 <Icon />
                 <motion.div
@@ -100,18 +107,25 @@ export default function Header({
           <motion.h1
             layout
             className={
-              isFullPage
+              isBannerExpanded
                 ? "text-3xl font-bold md:text-6xl [@media(max-height:40rem)]:text-xl"
                 : "text-xl"
             }
+            onLayoutAnimationComplete={() => {
+              if (isBannerCollapsing.current && padRef.current) {
+                padRef.current.style.height = `${window.innerHeight}px`;
+                window.scroll(0, window.innerHeight);
+                isBannerCollapsing.current = false;
+              }
+            }}
           >
             RUET Materials Club
           </motion.h1>
-          {isFullPage && (
+          {isBannerExpanded && (
             <motion.div
               key="motto"
               className={
-                isFullPage
+                isBannerExpanded
                   ? "text-xl md:text-3xl [@media(max-height:40rem)]:text-lg"
                   : "hidden"
               }
@@ -120,19 +134,24 @@ export default function Header({
             </motion.div>
           )}
 
-          {!isFullPage && (
+          {!isBannerExpanded && (
             <div className="ms-auto md:hidden">
-              <Hamburger toggled={isOpen} toggle={setOpen} size={24} rounded />
+              <Hamburger
+                toggled={isNavMenuOpen}
+                toggle={setIsNavMenuOpen}
+                size={24}
+                rounded
+              />
             </div>
           )}
           <motion.nav
             layout
             className={cn(
               "flex gap-4 rounded-3xl",
-              isFullPage ? "absolute bottom-4" : "ms-auto",
-              isFullPage || isOpen || "max-md:hidden",
-              isFullPage ||
-                "top-full right-4 left-4 max-md:absolute max-md:flex-col max-md:border max-md:bg-blue-500/5 max-md:p-2 max-md:backdrop-blur-[2px]",
+              isBannerExpanded ? "absolute bottom-4" : "ms-auto",
+              isBannerExpanded || isNavMenuOpen || "max-md:hidden",
+              isBannerExpanded ||
+                "top-full right-4 left-4 max-md:absolute max-md:flex-col max-md:border max-md:bg-blue-500/10 max-md:p-2 max-md:backdrop-blur-lg",
             )}
           >
             {navigationLinks.map((x) =>
@@ -143,7 +162,10 @@ export default function Header({
                     "cursor-pointer border-b-2 border-b-blue-500/50 bg-blue-500/15",
                   )}
                   key={x.path}
-                  onClick={() => window.scroll(0, window.innerHeight)}
+                  onClick={() => {
+                    setIsBannerExpanded((x) => !x);
+                    setIsNavMenuOpen(false);
+                  }}
                 >
                   {x.name}
                 </button>
@@ -154,7 +176,7 @@ export default function Header({
                   className={cn(
                     linkClassName,
                     pathname === x.path ||
-                      isFullPage ||
+                      isBannerExpanded ||
                       "max-md:bg-transparent",
                     pathname === x.path
                       ? "border-b-2 border-b-blue-500/50 bg-blue-500/15"

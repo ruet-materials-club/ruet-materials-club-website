@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <footer
       className={cn(
-        "mt-auto border-t-2 border-solid border-blue-500/5 bg-blue-500/5 backdrop-blur-[2px]",
+        "mt-auto border-t-2 border-solid border-blue-500/5",
         classes.footer,
       )}
     >

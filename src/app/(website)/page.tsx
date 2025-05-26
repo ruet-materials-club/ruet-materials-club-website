@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       {/* About Section */}
-      <section id="about" className="bg-white py-20">
+      <section id="about" className="py-20">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="mx-auto mb-16 max-w-4xl text-center">
             <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-100">
