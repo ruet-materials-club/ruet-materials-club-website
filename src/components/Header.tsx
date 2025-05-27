@@ -2,6 +2,7 @@
 
 import IconMinified from "@/images/logo-3d.webp";
 import { cn } from "@/lib/utils";
+import disableScroll from "disable-scroll";
 import { Divide as Hamburger } from "hamburger-react";
 import { motion } from "motion/react";
 import dynamic from "next/dynamic";
@@ -27,18 +28,20 @@ export default function Header({
   const [isBannerExpanded, setIsBannerExpanded] = useState(pathname === "/");
   const isBannerCollapsing = useRef(false);
 
-  function collapseBanner() {
-    isBannerCollapsing.current = true;
-    return false;
-  }
-
   useEffect(() => {
     setIsNavMenuOpen(false);
     if (pathname !== "/") return setIsBannerExpanded(false);
     const observer1 = new IntersectionObserver(
       ([e]) => {
         if (e.intersectionRatio < 0.99 && !isBannerCollapsing.current) {
-          setIsBannerExpanded(collapseBanner);
+          isBannerCollapsing.current = true;
+          window.scroll({ top: 0, behavior: "instant" });
+          disableScroll.on();
+          setIsBannerExpanded(false);
+          setTimeout(() => {
+            disableScroll.off();
+            isBannerCollapsing.current = true;
+          }, 350);
         }
       },
       { threshold: [0.5, 0.75, 1] },
@@ -114,6 +117,7 @@ export default function Header({
             onLayoutAnimationComplete={() => {
               if (isBannerCollapsing.current && padRef.current) {
                 padRef.current.style.height = `${window.innerHeight}px`;
+                disableScroll.off();
                 window.scroll(0, window.innerHeight);
                 isBannerCollapsing.current = false;
               }
@@ -163,7 +167,12 @@ export default function Header({
                   )}
                   key={x.path}
                   onClick={() => {
-                    setIsBannerExpanded((x) => !x);
+                    if (isBannerExpanded)
+                      window.scroll({
+                        top: window.innerHeight,
+                        behavior: "instant",
+                      });
+                    else window.scroll({ top: 0, behavior: "smooth" });
                     setIsNavMenuOpen(false);
                   }}
                 >
@@ -184,6 +193,7 @@ export default function Header({
                   )}
                   onClick={() => {
                     if (padRef.current) padRef.current.style.display = "none";
+                    window.scroll({ top: 0, behavior: "instant" });
                   }}
                 >
                   {x.name}
