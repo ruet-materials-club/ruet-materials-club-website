@@ -40,7 +40,7 @@ function MemberCard({ data: x }: { data: Member }) {
             <AvatarImage src={getPhotoURL(x)} alt={x.fullName} />
             <AvatarFallback>{x.fullName[0]}</AvatarFallback>
           </Avatar>
-          <h3
+          <div
             className={cn(
               "font-semibold",
               x.groupOrder < 5
@@ -51,7 +51,7 @@ function MemberCard({ data: x }: { data: Member }) {
             )}
           >
             {x.fullName}
-          </h3>
+          </div>
           <p
             className={cn(
               "mt-1",

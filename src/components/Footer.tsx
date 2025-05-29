@@ -59,9 +59,11 @@ export default function Footer() {
                 href="https://www.facebook.com/profile.php?id=61571848140351"
               >
                 <FaFacebookF />
+                <span className="sr-only">Facebook</span>
               </a>
               <a className="p-2 hover:text-gray-500" target="_blank" href="#">
                 <FaLinkedinIn />
+                <span className="sr-only">LinkedIn</span>
               </a>
             </div>
           </div>
