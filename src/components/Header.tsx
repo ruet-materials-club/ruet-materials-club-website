@@ -28,6 +28,15 @@ export default function Header({
   const [isBannerExpanded, setIsBannerExpanded] = useState(pathname === "/");
   const isBannerCollapsing = useRef(false);
 
+  function handleCollapseEnd() {
+    if (isBannerCollapsing.current && padRef.current) {
+      isBannerCollapsing.current = false;
+      padRef.current.style.height = `${window.innerHeight}px`;
+      disableScroll.off();
+      window.scroll({ top: window.innerHeight, behavior: "instant" });
+    }
+  }
+
   useEffect(() => {
     setIsNavMenuOpen(false);
     if (pathname !== "/") return setIsBannerExpanded(false);
@@ -38,10 +47,7 @@ export default function Header({
           window.scroll({ top: 0, behavior: "instant" });
           disableScroll.on();
           setIsBannerExpanded(false);
-          setTimeout(() => {
-            disableScroll.off();
-            isBannerCollapsing.current = true;
-          }, 350);
+          setTimeout(handleCollapseEnd, 350);
         }
       },
       { threshold: [0.5, 0.75, 1] },
@@ -114,14 +120,7 @@ export default function Header({
                 ? "text-3xl font-bold md:text-6xl [@media(max-height:40rem)]:text-xl"
                 : "text-xl"
             }
-            onLayoutAnimationComplete={() => {
-              if (isBannerCollapsing.current && padRef.current) {
-                padRef.current.style.height = `${window.innerHeight}px`;
-                disableScroll.off();
-                window.scroll(0, window.innerHeight);
-                isBannerCollapsing.current = false;
-              }
-            }}
+            onLayoutAnimationComplete={handleCollapseEnd}
           >
             RUET Materials Club
           </motion.h1>
@@ -145,6 +144,7 @@ export default function Header({
                 toggle={setIsNavMenuOpen}
                 size={24}
                 rounded
+                label="Menu"
               />
             </div>
           )}
@@ -169,7 +169,7 @@ export default function Header({
                   onClick={() => {
                     if (isBannerExpanded)
                       window.scroll({
-                        top: window.innerHeight,
+                        top: window.innerHeight / 2,
                         behavior: "instant",
                       });
                     else window.scroll({ top: 0, behavior: "smooth" });
