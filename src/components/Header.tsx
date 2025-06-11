@@ -132,13 +132,15 @@ export default function Header({
                 ></motion.div>
               </>
             ) : (
-              <MotionImage
-                layout
-                layoutId="icon"
-                src={IconMinified}
-                alt="Icon"
-                className="h-12 w-auto"
-              />
+              <Link href="/">
+                <MotionImage
+                  layout
+                  layoutId="icon"
+                  src={IconMinified}
+                  alt="Icon"
+                  className="h-12 w-auto"
+                />
+              </Link>
             )}
           </div>
           <motion.h1
@@ -150,7 +152,7 @@ export default function Header({
             }
             onLayoutAnimationComplete={handleCollapseEnd}
           >
-            RUET Materials Club
+            <Link href="/">RUET Materials Club</Link>
           </motion.h1>
           {isBannerExpanded && (
             <motion.div

@@ -21,7 +21,7 @@ function getImageURL(post: Post) {
 function PostCard({ post }: { post: Post }) {
   return (
     <Card className="flex h-full flex-col overflow-hidden">
-      <div className="relative h-48 w-full overflow-hidden">
+      <div className="relative -mt-6 h-48 w-full overflow-hidden">
         <Image
           src={getImageURL(post)}
           alt={post.title}
