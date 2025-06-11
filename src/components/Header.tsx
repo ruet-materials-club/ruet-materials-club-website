@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useSwipeable } from "react-swipeable";
 
 const Icon = dynamic(() => import("./Icon"), {
   loading: () => <Image src={IconMinified} alt="Icon" className="px-16" />,
@@ -27,6 +28,16 @@ export default function Header({
   const headerRef = useRef<HTMLElement>(null);
   const [isBannerExpanded, setIsBannerExpanded] = useState(pathname === "/");
   const isBannerCollapsing = useRef(false);
+  const swipeHandlers = useSwipeable({
+    onSwipedUp: () => {
+      if (isBannerExpanded)
+        window.scroll({
+          top: window.innerHeight / 2,
+          behavior: "instant",
+        });
+    },
+    preventScrollOnSwipe: true,
+  });
 
   function handleCollapseEnd() {
     if (isBannerCollapsing.current && padRef.current) {
@@ -36,6 +47,14 @@ export default function Header({
       isBannerCollapsing.current = false;
     }
   }
+
+  const refPassthrough = (el: HTMLElement) => {
+    // call useSwipeable ref prop with el
+    swipeHandlers.ref(el);
+
+    // set headerRef el so you can access it yourself
+    headerRef.current = el;
+  };
 
   useEffect(() => {
     setIsNavMenuOpen(false);
@@ -85,7 +104,8 @@ export default function Header({
     <>
       {pathname === "/" && <div ref={padRef}></div>}
       <header
-        ref={headerRef}
+        {...swipeHandlers}
+        ref={refPassthrough}
         className={cn(
           isBannerExpanded || "sticky top-0 z-10 bg-[var(--c1)] shadow-lg",
         )}
