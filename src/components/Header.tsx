@@ -30,10 +30,10 @@ export default function Header({
 
   function handleCollapseEnd() {
     if (isBannerCollapsing.current && padRef.current) {
-      isBannerCollapsing.current = false;
       padRef.current.style.height = `${window.innerHeight}px`;
       disableScroll.off();
-      window.scroll({ top: window.innerHeight, behavior: "instant" });
+      window.scroll({ top: window.innerHeight + 1, behavior: "instant" });
+      isBannerCollapsing.current = false;
     }
   }
 
@@ -57,8 +57,16 @@ export default function Header({
       ([e]) => {
         if (e.intersectionRatio > 0 && !isBannerCollapsing.current) {
           padRef.current?.style.removeProperty("height");
-          window.scroll(0, 0);
           setIsBannerExpanded(true);
+          isBannerCollapsing.current = true;
+          setTimeout(() => {
+            isBannerCollapsing.current = false;
+          }, 350);
+          function scrollToTop() {
+            window.scroll({ top: 0, behavior: "instant" });
+            if (isBannerCollapsing.current) requestAnimationFrame(scrollToTop);
+          }
+          scrollToTop();
         }
       },
       { threshold: 0.1 },
@@ -86,7 +94,7 @@ export default function Header({
           className={cn(
             "relative flex items-center gap-4 py-4 [@media(max-height:40rem)]:gap-0",
             isBannerExpanded
-              ? "min-h-svh flex-col justify-center text-center"
+              ? "min-h-dvh flex-col justify-center text-center"
               : "container m-auto px-4",
           )}
         >
