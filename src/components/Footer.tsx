@@ -61,7 +61,11 @@ export default function Footer() {
                 <FaFacebookF />
                 <span className="sr-only">Facebook</span>
               </a>
-              <a className="p-2 hover:text-gray-500" target="_blank" href="#">
+              <a
+                className="p-2 hover:text-gray-500"
+                target="_blank"
+                href="https://www.linkedin.com/company/ruet-materials-club/"
+              >
                 <FaLinkedinIn />
                 <span className="sr-only">LinkedIn</span>
               </a>
