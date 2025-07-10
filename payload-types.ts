@@ -194,6 +194,7 @@ export interface Post {
   publishedDate?: string | null;
   author?: (number | null) | User;
   status?: ('draft' | 'published') | null;
+  category?: ('News' | 'MatChat') | null;
   /**
    * Brief summary of the post content
    */
@@ -381,6 +382,7 @@ export interface PostsSelect<T extends boolean = true> {
   publishedDate?: T;
   author?: T;
   status?: T;
+  category?: T;
   excerpt?: T;
   content?: T;
   tags?:
