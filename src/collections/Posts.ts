@@ -11,6 +11,7 @@ export const Posts: CollectionConfig = {
       "featuredImage",
       "publishedDate",
       "status",
+      "category",
     ],
   },
   access: {
@@ -86,6 +87,24 @@ export const Posts: CollectionConfig = {
         },
       ],
       defaultValue: "draft",
+      admin: {
+        position: "sidebar",
+      },
+    },
+    {
+      name: "category",
+      type: "select",
+      options: [
+        {
+          label: "News",
+          value: "News",
+        },
+        {
+          label: "MatChat",
+          value: "MatChat",
+        },
+      ],
+      defaultValue: "News",
       admin: {
         position: "sidebar",
       },
