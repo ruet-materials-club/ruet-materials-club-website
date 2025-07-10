@@ -9,7 +9,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 
 const Icon = dynamic(() => import("./Icon"), {
@@ -20,7 +20,7 @@ const MotionImage = motion.create(Image);
 export default function Header({
   navigationLinks,
 }: {
-  navigationLinks: { path: string; name: string }[];
+  navigationLinks: { path: string; name: string; icon: ReactNode }[];
 }) {
   const pathname = usePathname();
   const [isNavMenuOpen, setIsNavMenuOpen] = useState(false);
@@ -181,7 +181,7 @@ export default function Header({
           <motion.nav
             layout
             className={cn(
-              "flex gap-4 rounded-3xl",
+              "flex flex-wrap justify-center gap-4 rounded-3xl",
               isBannerExpanded ? "absolute bottom-4" : "ms-auto",
               isBannerExpanded || isNavMenuOpen || "max-md:hidden",
               isBannerExpanded ||
@@ -194,6 +194,7 @@ export default function Header({
                   className={cn(
                     linkClassName,
                     "cursor-pointer border-b-2 border-b-blue-500/50 bg-blue-500/15",
+                    "flex items-center gap-2",
                   )}
                   key={x.path}
                   onClick={() => {
@@ -206,6 +207,7 @@ export default function Header({
                     setIsNavMenuOpen(false);
                   }}
                 >
+                  {x.icon}
                   {x.name}
                 </button>
               ) : (
@@ -220,12 +222,14 @@ export default function Header({
                     pathname === x.path
                       ? "border-b-2 border-b-blue-500/50 bg-blue-500/15"
                       : "border-blue-500/10 bg-blue-500/5 hover:bg-blue-500/15",
+                    "flex items-center gap-2",
                   )}
                   onClick={() => {
                     if (padRef.current) padRef.current.style.display = "none";
                     window.scroll({ top: 0, behavior: "instant" });
                   }}
                 >
+                  {x.icon}
                   {x.name}
                 </Link>
               ),

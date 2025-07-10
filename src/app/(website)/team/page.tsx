@@ -127,40 +127,40 @@ export default async function Team() {
         </div>
 
         {/* Secretaries Section */}
-        <div className="flex flex-wrap justify-center gap-6">
+        {/* <div className="flex flex-wrap justify-center gap-6">
           {members.docs
             .filter((x) => x.groupOrder === 5)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
             ))}
-        </div>
+        </div> */}
 
         {/* Assistant Secretaries Section */}
-        <div className="flex flex-wrap justify-center gap-6">
+        {/* <div className="flex flex-wrap justify-center gap-6">
           {members.docs
             .filter((x) => x.groupOrder === 6)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
             ))}
-        </div>
+        </div> */}
 
         {/* Executive Members Section */}
-        <div className="flex flex-wrap justify-center gap-4">
+        {/* <div className="flex flex-wrap justify-center gap-4">
           {members.docs
             .filter((x) => x.groupOrder === 7)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
             ))}
-        </div>
+        </div> */}
 
         {/* Junior Executives Section */}
-        <div className="flex flex-wrap justify-center gap-4">
+        {/* <div className="flex flex-wrap justify-center gap-4">
           {members.docs
             .filter((x) => x.groupOrder === 8)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
             ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
