@@ -79,6 +79,9 @@ export default async function Team() {
   return (
     <div className="container mx-auto px-4 py-12">
       <h1 className="mb-16 text-center text-4xl font-bold">Meet our team</h1>
+      <h2 className="mb-8 text-center text-2xl font-bold">
+        The founding committee
+      </h2>
 
       <div className="space-y-16">
         {/* Moderator Section */}

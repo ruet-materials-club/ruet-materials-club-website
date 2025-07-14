@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { emboss } from "@/lib/emboss";
 import { Award, BookOpen, Users } from "lucide-react";
 
 export default function Home() {
@@ -31,8 +32,8 @@ export default function Home() {
           <div className="grid gap-8 md:grid-cols-3">
             <Card className="text-center transition-shadow hover:shadow-lg">
               <CardHeader>
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
-                  <Users className="h-8 w-8 text-blue-600" />
+                <div className="mx-auto mt-8 mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                  {emboss(<Users className="h-16 w-16 text-blue-600" />)}
                 </div>
                 <CardTitle>Community</CardTitle>
               </CardHeader>
@@ -46,8 +47,8 @@ export default function Home() {
 
             <Card className="text-center transition-shadow hover:shadow-lg">
               <CardHeader>
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100">
-                  <BookOpen className="h-8 w-8 text-indigo-600" />
+                <div className="mx-auto mt-8 mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                  {emboss(<BookOpen className="h-16 w-16 text-indigo-600" />)}
                 </div>
                 <CardTitle>Learning</CardTitle>
               </CardHeader>
@@ -61,8 +62,8 @@ export default function Home() {
 
             <Card className="text-center transition-shadow hover:shadow-lg">
               <CardHeader>
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100">
-                  <Award className="h-8 w-8 text-purple-600" />
+                <div className="mx-auto mt-8 mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                  {emboss(<Award className="h-16 w-16 text-purple-600" />)}
                 </div>
                 <CardTitle>Excellence</CardTitle>
               </CardHeader>
