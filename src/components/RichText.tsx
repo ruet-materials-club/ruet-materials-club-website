@@ -185,6 +185,7 @@ const RichText: React.FC<RichTextProps> = ({ content, className }) => {
       );
     }
 
+    console.log(node);
     // Default case: render children
     return (
       <>

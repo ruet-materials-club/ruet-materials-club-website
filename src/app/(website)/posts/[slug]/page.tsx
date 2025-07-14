@@ -1,7 +1,7 @@
 import { Post, User } from "@/../payload-types";
-import RichText from "@/components/RichText";
 import { Button } from "@/components/ui/button";
 import config from "@payload-config";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 import { format } from "date-fns";
 import { ArrowLeft } from "lucide-react";
 import { Metadata } from "next";
@@ -128,7 +128,7 @@ export default async function PostPage({ params }: Props) {
       )}
 
       <div className="prose-lg prose-blue mx-auto max-w-4xl">
-        <RichText content={postData.content} />
+        <RichText data={postData.content} />
       </div>
     </div>
   );
