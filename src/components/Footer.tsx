@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import {
   FaEnvelope,
   FaFacebookF,
@@ -49,6 +50,27 @@ export default function Footer() {
                 RUET, Rajshahi, Bangladesh
               </a>
             </p>
+          </div>
+          <div className="flex-auto grow-0">
+            <h2>Related Sites</h2>
+            <div className="flex flex-col gap-2">
+              <a
+                className="flex items-center gap-2 underline hover:text-gray-500"
+                target="_blank"
+                href="https://www.mse.ruet.ac.bd/"
+              >
+                <FaExternalLinkAlt />
+                https://www.mse.ruet.ac.bd/
+              </a>
+              <a
+                className="flex items-center gap-2 underline hover:text-gray-500"
+                target="_blank"
+                href="https://sites.google.com/view/matstorage/?ref=rmc"
+              >
+                <FaExternalLinkAlt />
+                MatStorage
+              </a>
+            </div>
           </div>
           <div className="flex-auto grow-0 md:text-right">
             <h2>Follow us on</h2>
