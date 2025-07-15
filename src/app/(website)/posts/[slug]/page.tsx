@@ -122,7 +122,7 @@ export default async function PostPage({ params }: Props) {
       </div>
 
       {postData.excerpt && (
-        <div className="mb-8 rounded-lg bg-gray-50 p-6 text-lg text-gray-700 italic">
+        <div className="mb-8 rounded-lg bg-gray-50 p-6 text-center text-lg text-gray-700 italic">
           {postData.excerpt}
         </div>
       )}

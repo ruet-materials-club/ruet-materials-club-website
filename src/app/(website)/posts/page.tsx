@@ -71,20 +71,26 @@ export default async function PostsPage() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="mb-8 text-center text-4xl font-bold">Latest Posts</h1>
+    <div className="container mx-auto space-y-12 px-4 py-12">
+      {["News", "MatChat"].map((category) => (
+        <div key={category}>
+          <h2 className="mb-8 text-center text-4xl font-bold">{category}</h2>
 
-      {posts.docs.length === 0 ? (
-        <div className="text-center">
-          <p className="text-lg text-gray-600">No posts found.</p>
+          {posts.docs.length === 0 ? (
+            <div className="text-center">
+              <p className="text-lg text-gray-600">No posts found.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {posts.docs
+                .filter((x) => x.category === category)
+                .map((post) => (
+                  <PostCard key={post.id} post={post} />
+                ))}
+            </div>
+          )}
         </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {posts.docs.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-        </div>
-      )}
+      ))}
     </div>
   );
 }
