@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Jost } from "next/font/google";
+import Script from "next/script";
 import { FaHouse, FaNewspaper, FaUsers } from "react-icons/fa6";
 import "./globals.css";
 
@@ -34,6 +35,11 @@ export default function RootLayout({
         />
         {children}
         <Footer />
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="7a1c6141-d2f1-4eee-aceb-c0e2f57391e0"
+        />
       </body>
     </html>
   );
