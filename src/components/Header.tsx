@@ -185,7 +185,7 @@ export default function Header({
               isBannerExpanded ? "absolute bottom-4" : "ms-auto",
               isBannerExpanded || isNavMenuOpen || "max-md:hidden",
               isBannerExpanded ||
-                "top-full right-4 left-4 max-md:absolute max-md:flex-col max-md:border max-md:bg-blue-500/10 max-md:p-2 max-md:backdrop-blur-lg",
+                "top-full right-4 left-4 max-md:absolute max-md:flex-col max-md:border max-md:bg-blue-500/10 max-md:p-2 max-md:backdrop-blur-[10rem]",
             )}
           >
             {navigationLinks.map((x) =>

@@ -20,7 +20,7 @@ function getImageURL(post: Post) {
 
 function PostCard({ post }: { post: Post }) {
   return (
-    <Card className="flex h-full flex-col overflow-hidden">
+    <Card className="relative flex h-full flex-col overflow-hidden">
       <div className="relative -mt-6 h-48 w-full overflow-hidden">
         <Image
           src={getImageURL(post)}
@@ -31,7 +31,11 @@ function PostCard({ post }: { post: Post }) {
         />
       </div>
       <CardHeader>
-        <CardTitle className="line-clamp-2">{post.title}</CardTitle>
+        <CardTitle className="line-clamp-2">
+          <Link href={`/posts/${post.slug}`} className="stretched-link">
+            {post.title}
+          </Link>
+        </CardTitle>
         {post.publishedDate && (
           <CardDescription>
             {format(new Date(post.publishedDate), "MMMM d, yyyy")}
@@ -45,7 +49,7 @@ function PostCard({ post }: { post: Post }) {
       </CardContent>
       <CardFooter>
         <Button asChild className="w-full">
-          <Link href={`/posts/${post.slug}`}>Read More</Link>
+          <span>Read More</span>
         </Button>
       </CardFooter>
     </Card>
