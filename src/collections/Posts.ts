@@ -103,6 +103,10 @@ export const Posts: CollectionConfig = {
           label: "MatChat",
           value: "MatChat",
         },
+        {
+          label: "MatPoster",
+          value: "MatPoster",
+        },
       ],
       defaultValue: "News",
       admin: {

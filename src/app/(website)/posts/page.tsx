@@ -76,7 +76,7 @@ export default async function PostsPage() {
 
   return (
     <div className="container mx-auto space-y-12 px-4 py-12">
-      {["News", "MatChat"].map((category) => (
+      {["News", "MatChat", "MatPoster"].map((category) => (
         <div key={category}>
           <h2 className="mb-8 text-center text-4xl font-bold">{category}</h2>
 

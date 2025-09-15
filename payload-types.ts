@@ -194,7 +194,7 @@ export interface Post {
   publishedDate?: string | null;
   author?: (number | null) | User;
   status?: ('draft' | 'published') | null;
-  category?: ('News' | 'MatChat') | null;
+  category?: ('News' | 'MatChat' | 'MatPoster') | null;
   /**
    * Brief summary of the post content
    */
