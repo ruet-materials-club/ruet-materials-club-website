@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import config from "@payload-config";
 import { getPayload } from "payload";
+import CommitteeSelector from "./committee-selector";
 
 function getPhotoURL(x: Member) {
   return typeof x.photo === "number" ? "" : x.photo.url!;
@@ -68,25 +69,67 @@ function MemberCard({ data: x }: { data: Member }) {
   );
 }
 
-export default async function Team() {
+function getCommitteeLabel(committee: number, latestCommittee: number): string {
+  if (committee === 0) return "Founding";
+  if (committee === latestCommittee) return "Running";
+  return `${committee + 1}${committee === 1 ? "nd" : committee === 2 ? "rd" : "th"}`;
+}
+
+export default async function Team({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
   const payload = await getPayload({ config });
+
+  // Get all members
   const members = await payload.find({
     collection: "members",
     limit: 0,
-    sort: ["groupOrder", "orderWithInGroup"],
+    sort: ["committee", "groupOrder", "orderWithInGroup"],
   });
+
+  // Get unique committee numbers
+  const committees = [
+    ...new Set(members.docs.map((member) => member.committee)),
+  ].sort((a, b) => a - b);
+
+  // Get the latest committee (highest number) as default
+  const latestCommittee = Math.max(...committees);
+  const selectedCommittee = params.committee
+    ? parseInt(params.committee as string)
+    : latestCommittee;
+
+  // Filter members by selected committee
+  const filteredMembers = members.docs.filter(
+    (member) => member.committee === selectedCommittee,
+  );
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="mb-16 text-center text-4xl font-bold">Meet our team</h1>
+      <h1 className="mb-8 text-center text-4xl font-bold">Meet our team</h1>
+
+      {/* Committee Selector */}
+      <div className="mb-8 flex justify-center">
+        <CommitteeSelector
+          committees={committees.map((committee) =>
+            getCommitteeLabel(committee, latestCommittee),
+          )}
+          selectedCommittee={selectedCommittee}
+        />
+      </div>
+
       <h2 className="mb-8 text-center text-2xl font-bold">
-        The founding committee
+        The{" "}
+        {getCommitteeLabel(selectedCommittee, latestCommittee).toLowerCase()}{" "}
+        committee
       </h2>
 
       <div className="space-y-16">
         {/* Moderator Section */}
         <div className="mb-6 flex justify-center">
-          {members.docs
+          {filteredMembers
             .filter((x) => x.groupOrder === 0)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
@@ -95,7 +138,7 @@ export default async function Team() {
 
         {/* Advisors Section */}
         <div className="flex flex-wrap justify-center gap-6">
-          {members.docs
+          {filteredMembers
             .filter((x) => x.groupOrder === 1)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
@@ -105,14 +148,14 @@ export default async function Team() {
         {/* President & Vice Presidents Section */}
         <div className="flex flex-wrap justify-center gap-6">
           {/* President */}
-          {members.docs
+          {filteredMembers
             .filter((x) => x.groupOrder === 2)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
             ))}
 
           {/* Vice Presidents */}
-          {members.docs
+          {filteredMembers
             .filter((x) => x.groupOrder === 3)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
@@ -122,7 +165,7 @@ export default async function Team() {
         {/* General Secretaries Section */}
         <div className="flex flex-wrap justify-center gap-6">
           {/* General Secretary */}
-          {members.docs
+          {filteredMembers
             .filter((x) => x.groupOrder === 4)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
@@ -130,40 +173,40 @@ export default async function Team() {
         </div>
 
         {/* Secretaries Section */}
-        {/* <div className="flex flex-wrap justify-center gap-6">
-          {members.docs
+        <div className="flex flex-wrap justify-center gap-6">
+          {filteredMembers
             .filter((x) => x.groupOrder === 5)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
             ))}
-        </div> */}
+        </div>
 
         {/* Assistant Secretaries Section */}
-        {/* <div className="flex flex-wrap justify-center gap-6">
-          {members.docs
+        <div className="flex flex-wrap justify-center gap-6">
+          {filteredMembers
             .filter((x) => x.groupOrder === 6)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
             ))}
-        </div> */}
+        </div>
 
         {/* Executive Members Section */}
-        {/* <div className="flex flex-wrap justify-center gap-4">
-          {members.docs
+        <div className="flex flex-wrap justify-center gap-4">
+          {filteredMembers
             .filter((x) => x.groupOrder === 7)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
             ))}
-        </div> */}
+        </div>
 
         {/* Junior Executives Section */}
-        {/* <div className="flex flex-wrap justify-center gap-4">
-          {members.docs
+        <div className="flex flex-wrap justify-center gap-4">
+          {filteredMembers
             .filter((x) => x.groupOrder === 8)
             .map((x) => (
               <MemberCard key={x.id} data={x} />
             ))}
-        </div> */}
+        </div>
       </div>
     </div>
   );
