@@ -41,7 +41,7 @@ export const Members: CollectionConfig = {
       defaultValue: 0,
     },
     {
-      name: "commitee",
+      name: "committee",
       type: "number",
       required: true,
       defaultValue: 0,

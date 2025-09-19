@@ -242,7 +242,7 @@ export interface Member {
   position: string;
   orderWithInGroup: number;
   groupOrder: number;
-  commitee: number;
+  committee: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -419,7 +419,7 @@ export interface MembersSelect<T extends boolean = true> {
   position?: T;
   orderWithInGroup?: T;
   groupOrder?: T;
-  commitee?: T;
+  committee?: T;
   updatedAt?: T;
   createdAt?: T;
 }
